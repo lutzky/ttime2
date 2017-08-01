@@ -1,0 +1,9 @@
+<h2>Faculties</h2>
+
+<div *ngIf="faculties">
+  <ul>
+    <li *ngFor="let faculty of faculties">
+      {{faculty.Name}}
+    </li>
+  </ul>
+</div>
