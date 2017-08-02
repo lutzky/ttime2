@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
-import { Faculty } from '../catalog';
+import { Catalog } from '../catalog';
 
 @Component({
   selector: 'app-catalog',
@@ -9,8 +9,7 @@ import { Faculty } from '../catalog';
   providers: [CatalogService]
 })
 export class CatalogComponent implements OnInit {
-  // TODO(lutzky): Should be a catalog
-  faculties: Faculty[];
+  catalog: Catalog;
 
   constructor(private catalogService: CatalogService) { }
 
@@ -19,6 +18,6 @@ export class CatalogComponent implements OnInit {
   }
 
   getCatalog() {
-    this.catalogService.getCatalog().then(faculties => this.faculties = faculties);
+    this.catalogService.getCatalog().then(catalog => this.catalog = catalog);
   }
 }

@@ -11,13 +11,10 @@ export class CatalogService {
 
   constructor(private http: Http) { }
 
-  // TODO(lutzky): We actually want to return a Promise<Catalog>
-  getCatalog(): Promise<Faculty[]> {
+  getCatalog(): Promise<Catalog> {
     return this.http.get(this.catalogUrl)
       .toPromise()
-    .then(function(response) {
-      return response.json() as Faculty[];
-    })
+      .then(response => ({ faculties: response.json() } as Catalog))
       .catch(this.handleError);
   }
 

@@ -1,9 +1,14 @@
 <h2>Faculties</h2>
 
-<div *ngIf="faculties">
+<div *ngIf="catalog">
   <ul>
-    <li *ngFor="let faculty of faculties">
-      {{faculty.Name}}
+    <li *ngFor="let faculty of catalog.faculties">
+      {{faculty.name}}
+      <ul>
+        <li *ngFor="let course of faculty.courses">
+          {{course.id}} {{course.name}}
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
