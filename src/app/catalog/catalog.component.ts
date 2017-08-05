@@ -15,18 +15,31 @@ export class CatalogComponent implements OnInit {
   constructor(private catalogService: CatalogService) { }
 
   ngOnInit() {
-    this.getCatalog();
+    this.getCatalog().then(() => this.unmarshalCourses());
   }
 
   getCatalog() {
-    this.catalogService.getCatalog().then(catalog => this.catalog = catalog);
+    return this.catalogService.getCatalog().then(catalog => this.catalog = catalog);
   }
 
   addCourse(course: Course) {
     this.selectedCourses.add(course);
+    this.marshalCourses();
   }
 
   removeCourse(course: Course) {
     this.selectedCourses.delete(course);
+    this.marshalCourses();
+  }
+
+  marshalCourses() {
+    // TODO(lutzky): Only marshal the course IDs.
+    var s: string = JSON.stringify(Array.from(this.selectedCourses));
+    window.localStorage.setItem("selectedCourses", s);
+  }
+
+  unmarshalCourses() {
+    var s: string = window.localStorage.getItem("selectedCourses");
+    this.selectedCourses = new Set<Course>(JSON.parse(s) as Course[]);
   }
 }
