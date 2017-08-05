@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
-import { Catalog } from '../catalog';
+import { Catalog, Course } from '../catalog';
 
 @Component({
   selector: 'app-catalog',
@@ -10,6 +10,7 @@ import { Catalog } from '../catalog';
 })
 export class CatalogComponent implements OnInit {
   catalog: Catalog;
+  selectedCourses: Set<Course> = new Set<Course>();
 
   constructor(private catalogService: CatalogService) { }
 
@@ -19,5 +20,10 @@ export class CatalogComponent implements OnInit {
 
   getCatalog() {
     this.catalogService.getCatalog().then(catalog => this.catalog = catalog);
+  }
+
+  addCourse(course: Course) {
+    this.selectedCourses.add(course);
+    console.info("Selected courses:", this.selectedCourses);
   }
 }

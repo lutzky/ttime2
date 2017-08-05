@@ -1,3 +1,13 @@
+<h2>Selected courses</h2>
+
+<div>
+  <ul>
+    <li *ngFor="let course of selectedCourses">
+      {{course.id}} {{course.name}}
+    </li>
+  </ul>
+</div>
+
 <h2>Faculties</h2>
 
 <div *ngIf="catalog">
@@ -6,6 +16,7 @@
       {{faculty.name}}
       <ul>
         <li *ngFor="let course of faculty.courses">
+          <button (click)="addCourse(course)">+</button>
           {{course.id}} {{course.name}}
         </li>
       </ul>

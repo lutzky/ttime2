@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Catalog, Faculty } from './catalog';
+import { Catalog, Faculty, Course } from './catalog';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -16,6 +16,20 @@ export class CatalogService {
       .toPromise()
       .then(response => ({ faculties: response.json() } as Catalog))
       .catch(this.handleError);
+  }
+
+  getCourse(id: number): Promise<Course> {
+    return this.getCatalog().then(function(catalog: Catalog) {
+      for (let faculty of catalog.faculties) {
+        for (let course of faculty.courses) {
+          if (course.id == id) {
+            return course;
+          }
+        }
+      }
+      return null;
+    })
+    // TODO(lutzky): This should be cached from the previous getCatalog()
   }
 
   private handleError(error: any) {
