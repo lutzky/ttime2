@@ -21,6 +21,28 @@
   </ul>
 </div>
 
+<button (click)="getSchedules()">Generate schedules</button>
+
+<div *ngIf="schedules">
+  <ul>
+    <li *ngFor="let schedule of schedules">
+      Possible schedule
+      <ul>
+        <li *ngFor="let group of schedule">
+          Group {{group.id}} ({{group.type}})
+          <ul>
+            <li *ngFor="let event of group.events">
+              {{event.day | weekday}},
+              {{event.startMinute | fromMinutes}}-{{
+                event.endMinute | fromMinutes}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
 <h2>Faculties</h2>
 
 <div *ngIf="catalog">
