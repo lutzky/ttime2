@@ -24,6 +24,9 @@ export class CatalogComponent implements OnInit {
 
   addCourse(course: Course) {
     this.selectedCourses.add(course);
-    console.info("Selected courses:", this.selectedCourses);
+  }
+
+  removeCourse(course: Course) {
+    this.selectedCourses.delete(course);
   }
 }

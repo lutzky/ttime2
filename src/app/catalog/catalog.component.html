@@ -3,6 +3,7 @@
 <div>
   <ul>
     <li *ngFor="let course of selectedCourses">
+      <button (click)="removeCourse(course)">-</button>
       {{course.id}} {{course.name}}
     </li>
   </ul>
