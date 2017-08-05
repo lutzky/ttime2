@@ -5,6 +5,16 @@
     <li *ngFor="let course of selectedCourses">
       <button (click)="removeCourse(course)">-</button>
       {{course.id}} {{course.name}}
+      <ul>
+        <li *ngFor="let group of course.groups">
+          Group {{group.id}} ({{group.type}})
+          <ul>
+            <li *ngFor="let event of group.events">
+              Day {{event.day}}, {{event.startMinute}}-{{event.endMinute}}
+            </li>
+          </ul>
+        </li>
+      </ul>
     </li>
   </ul>
 </div>

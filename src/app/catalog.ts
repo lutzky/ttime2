@@ -10,7 +10,21 @@ export class Course {
   lecturerInCharge: string;
   // TODO(lutzky): weeklyHours
   // TODO(lutzky): testDates
-  // TODO(lutzky): groups: Group[];
+  groups: Group[];
+}
+
+export class Group {
+  id: number;
+  teachers: string[];
+  events: Event[];
+  type: string;
+}
+
+export class Event {
+  day: number;
+  location: string;
+  startMinute: number;
+  endMinute: number;
 }
 
 export class Catalog {
