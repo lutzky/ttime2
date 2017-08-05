@@ -18,20 +18,6 @@ export class CatalogService {
       .catch(this.handleError);
   }
 
-  getCourse(id: number): Promise<Course> {
-    return this.getCatalog().then(function(catalog: Catalog) {
-      for (let faculty of catalog.faculties) {
-        for (let course of faculty.courses) {
-          if (course.id == id) {
-            return course;
-          }
-        }
-      }
-      return null;
-    })
-    // TODO(lutzky): This should be cached from the previous getCatalog()
-  }
-
   private handleError(error: any) {
     // TODO(lutzky): Make errors clearly visible to user
     console.error('An error occurred', error);

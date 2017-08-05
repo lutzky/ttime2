@@ -31,3 +31,13 @@ export class Catalog {
   faculties: Faculty[];
 }
 
+export function getCourseById(catalog: Catalog, id: number): Course {
+  for (let faculty of catalog.faculties) {
+    for (let course of faculty.courses) {
+      if (course.id == id) {
+        return course;
+      }
+    }
+  }
+  return null;
+}

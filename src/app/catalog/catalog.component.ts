@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
-import { Catalog, Course } from '../catalog';
+import { Catalog, Course, getCourseById } from '../catalog';
 
 @Component({
   selector: 'app-catalog',
@@ -33,13 +33,14 @@ export class CatalogComponent implements OnInit {
   }
 
   marshalCourses() {
-    // TODO(lutzky): Only marshal the course IDs.
-    var s: string = JSON.stringify(Array.from(this.selectedCourses));
-    window.localStorage.setItem("selectedCourses", s);
+    var ids: number[] = Array.from(this.selectedCourses).map(course => course.id);
+    window.localStorage.setItem("selectedCourses", JSON.stringify(ids));
   }
 
   unmarshalCourses() {
-    var s: string = window.localStorage.getItem("selectedCourses");
-    this.selectedCourses = new Set<Course>(JSON.parse(s) as Course[]);
+    var ids: number[] = JSON.parse(window.localStorage.getItem("selectedCourses"));
+    for (let id of ids) {
+      this.selectedCourses.add(getCourseById(this.catalog, id));
+    }
   }
 }
