@@ -10,7 +10,9 @@
           Group {{group.id}} ({{group.type}})
           <ul>
             <li *ngFor="let event of group.events">
-              Day {{event.day}}, {{event.startMinute}}-{{event.endMinute}}
+              {{event.day | weekday}},
+              {{event.startMinute | fromMinutes}}-{{
+                event.endMinute | fromMinutes}}
             </li>
           </ul>
         </li>

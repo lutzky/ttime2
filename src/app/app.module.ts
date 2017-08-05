@@ -4,11 +4,15 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { WeekdayPipe } from './weekday.pipe';
+import { FromMinutesPipe } from './from-minutes.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CatalogComponent
+    CatalogComponent,
+    WeekdayPipe,
+    FromMinutesPipe
   ],
   imports: [
     BrowserModule,
