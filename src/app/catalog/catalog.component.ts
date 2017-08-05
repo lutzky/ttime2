@@ -18,11 +18,6 @@ export class CatalogComponent implements OnInit {
     this.getCatalog().then(() => this.unmarshalCourses());
   }
 
-  dayOfWeek(dayNumber: number): string {
-    return ["Sunday", "Monday", "Tuesday", "Wednesday",
-      "Thursday", "Friday", "Saturday"][dayNumber];
-  }
-
   getCatalog() {
     return this.catalogService.getCatalog().then(catalog => this.catalog = catalog);
   }
