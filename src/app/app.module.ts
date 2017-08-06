@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { WeekdayPipe } from './weekday.pipe';
 import { FromMinutesPipe } from './from-minutes.pipe';
+import { ScheduleViewerComponent } from './schedule-viewer/schedule-viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CatalogComponent,
     WeekdayPipe,
-    FromMinutesPipe
+    FromMinutesPipe,
+    ScheduleViewerComponent
   ],
   imports: [
     BrowserModule,
