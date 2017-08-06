@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
+import { SchedulerService} from '../scheduler.service';
 import { Catalog, Course, Group, getCourseById } from '../catalog';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
   styleUrls: ['./catalog.component.css'],
-  providers: [CatalogService]
+  providers: [CatalogService,SchedulerService]
 })
 export class CatalogComponent implements OnInit {
   catalog: Catalog;
   selectedCourses: Set<Course> = new Set<Course>();
   schedules: Group[][];
 
-  constructor(private catalogService: CatalogService) { }
+  constructor(
+    private catalogService: CatalogService,
+    private schedulerService: SchedulerService
+  ) { }
 
   ngOnInit() {
     this.getCatalog().then(() => this.unmarshalCourses());
@@ -24,8 +28,7 @@ export class CatalogComponent implements OnInit {
   }
 
   getSchedules() {
-    // TODO(lutzky): Scheduling should be its own service
-    this.schedules = this.catalogService.getSchedules(Array.from(this.selectedCourses));
+    this.schedules = this.schedulerService.getSchedules(Array.from(this.selectedCourses));
   }
 
   addCourse(course: Course) {
