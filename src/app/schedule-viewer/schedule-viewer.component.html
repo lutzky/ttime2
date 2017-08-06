@@ -1,19 +1,25 @@
 <h2>Schedules</h2>
 
-<button (click)="prev()">&laquo;</button>
-{{current}} / {{schedules.length}}
-<button (click)="next()">&raquo;</button>
+<div *ngIf="schedules && schedules.length > 0; else no_schedules">
+  <button (click)="prev()">&laquo;</button>
+  {{current}} / {{schedules.length}}
+  <button (click)="next()">&raquo;</button>
 
-<h3>Schedule {{current}}</h3>
-<ul>
-  <li *ngFor="let group of schedules[current]">
-    Group {{group.id}} ({{group.type}})
-    <ul>
-      <li *ngFor="let event of group.events">
-        {{event.day | weekday}},
-        {{event.startMinute | fromMinutes}}-{{
-          event.endMinute | fromMinutes}}
-      </li>
-    </ul>
-  </li>
-</ul>
+  <h3>Schedule {{current}}</h3>
+  <ul>
+    <li *ngFor="let group of schedules[current].groups">
+      Group {{group.id}} ({{group.type}})
+      <ul>
+        <li *ngFor="let event of group.events">
+          {{event.day | weekday}},
+          {{event.startMinute | fromMinutes}}-{{
+            event.endMinute | fromMinutes}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<ng-template #no_schedules>
+  No possible schedules :(
+</ng-template>

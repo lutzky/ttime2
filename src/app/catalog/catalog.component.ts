@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CatalogService } from '../catalog.service';
 import { SchedulerService} from '../scheduler.service';
 import { Catalog, Course, Group, getCourseById } from '../catalog';
+import { Schedule } from '../schedule';
 
 @Component({
   selector: 'app-catalog',
@@ -12,7 +13,7 @@ import { Catalog, Course, Group, getCourseById } from '../catalog';
 export class CatalogComponent implements OnInit {
   catalog: Catalog;
   selectedCourses: Set<Course> = new Set<Course>();
-  schedules: Group[][];
+  schedules: Schedule[];
 
   constructor(
     private catalogService: CatalogService,
