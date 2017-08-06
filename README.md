@@ -8,6 +8,20 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Deployment
+
+For deployment to github pages:
+
+```
+npm install -g angular-cli-ghpages
+ng build --prod --base-href "http://lutzky.net/ttime2/"
+ngh
+```
+
+This will build a production version of the binary in `dist/`, and push it as the `gh-pages` branch of the current repository. Note that the trailing slash in `base-href` is important. For your own github pages account, you probably want to replace `lutzky.net` with `username.github.io`.
+
+```
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
