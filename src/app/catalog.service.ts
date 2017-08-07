@@ -14,8 +14,28 @@ export class CatalogService {
   getCatalog(): Promise<Catalog> {
     return this.http.get(this.catalogUrl)
       .toPromise()
-      .then(response => ({ faculties: response.json() } as Catalog))
+      .then(response => (CatalogService.updateUplinks({ faculties: response.json() } as Catalog)))
       .catch(this.handleError);
+  }
+
+  static updateUplinks(catalog: Catalog): Catalog {
+    for (let faculty of catalog.faculties) {
+      faculty.catalog = catalog;
+      for (let course of faculty.courses) {
+        course.faculty = faculty;
+        if (course.groups) {
+          for (let group of course.groups) {
+            group.course = course;
+            if (group.events) {
+              for (let event of group.events) {
+                event.group = group;
+              }
+            }
+          }
+        }
+      }
+    }
+    return catalog;
   }
 
   private handleError(error: any) {

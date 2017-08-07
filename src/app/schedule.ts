@@ -1,5 +1,5 @@
-import { Group } from './catalog';
+import * as catalog from './catalog';
 
 export class Schedule {
-  groups: Group[];
+  events: catalog.Event[];
 }

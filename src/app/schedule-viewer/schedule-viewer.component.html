@@ -7,13 +7,16 @@
 
   <h3>Schedule {{current}}</h3>
   <ul>
-    <li *ngFor="let group of schedules[current].groups">
-      Group {{group.id}} ({{group.type}})
+    <li *ngFor="let dayOfEvents of byDay(schedules[current])">
+      {{dayOfEvents[0].day | weekday}}
       <ul>
-        <li *ngFor="let event of group.events">
-          {{event.day | weekday}},
-          {{event.startMinute | fromMinutes}}-{{
-            event.endMinute | fromMinutes}}
+        <li *ngFor="let event of dayOfEvents">
+        {{event.startMinute | fromMinutes}}-{{
+          event.endMinute | fromMinutes}}
+        {{event.group.course.name}}
+        -
+        {{event.group.type}} {{event.group.id}} @ {{event.location}}
+        ({{event.group.teachers}})
         </li>
       </ul>
     </li>

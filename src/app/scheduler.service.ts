@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course, Group, Event } from './catalog';
+import * as catalog from './catalog';
 import { Schedule } from './schedule';
 
 import * as product from 'cartesian-product';
@@ -9,9 +9,9 @@ export class SchedulerService {
 
   constructor() { }
 
-  private static groupsByType(course: Course): Group[][] {
+  private static groupsByType(course: catalog.Course): catalog.Group[][] {
     // TODO(lutzky): Test me, move me into scheduling service
-    var m: Map<string, Group[]> = new Map();
+    var m: Map<string, catalog.Group[]> = new Map();
 
     for (let group of course.groups) {
       if (!m.has(group.type)) {
@@ -23,15 +23,20 @@ export class SchedulerService {
     return Array.from(m.values());
   }
 
-  getSchedules(courses: Course[]): Schedule[] {
+  private static groupsToSchedule(groups: catalog.Group[]): Schedule {
+    var e: catalog.Event[] = groups.reduce((a, b) => a.concat(b.events), []);
+    return { events: e };
+  }
+
+  getSchedules(courses: catalog.Course[]): Schedule[] {
     // Each "bin" in groupBins is a collection of groups we have to choose
     // exactly one of to get a schedule.
-    var groupBins: Group[][] = courses.map(
+    var groupBins: catalog.Group[][] = courses.map(
       c => SchedulerService.groupsByType(c)
     ).reduce((a, b) => a.concat(b), []);
 
-    var groupProduct: Group[][] = product(groupBins);
-    var schedules: Schedule[] =  groupProduct.map(x => ({groups: x}));
+    var groupProduct: catalog.Group[][] = product(groupBins);
+    var schedules: Schedule[] =  groupProduct.map(SchedulerService.groupsToSchedule);
 
     // TODO(lutzky): Generic mechanism for additional filters
     var numSchedules = schedules.length;
@@ -41,14 +46,18 @@ export class SchedulerService {
     return schedules;
   }
 
-  private static eventsCollide(events: Event[]): boolean {
-    var e: Event[] = events.slice()
-    e.sort(function(a, b: Event) {
+  static sortEvents(events: catalog.Event[]) {
+    events.sort(function(a: catalog.Event, b: catalog.Event) {
       if (a.day != b.day) {
         return a.day - b.day;
       }
       return a.startMinute - b.startMinute;
     })
+  }
+
+  private static eventsCollide(events: catalog.Event[]): boolean {
+    var e: catalog.Event[] = events.slice()
+    SchedulerService.sortEvents(e);
 
     for (var i = 0; i < e.length - 1; i++) {
       if (e[i].day == e[i+1].day) {
@@ -62,9 +71,6 @@ export class SchedulerService {
   }
 
   filterNoCollisions(schedule: Schedule): boolean {
-    var events: Event[] = schedule.groups.reduce(function(es: Event[], g: Group): Event[] {
-      return es.concat(g.events);
-    }, [])
-    return !SchedulerService.eventsCollide(events);
+    return !SchedulerService.eventsCollide(schedule.events);
   }
 }

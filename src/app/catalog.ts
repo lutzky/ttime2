@@ -1,9 +1,11 @@
 export class Faculty {
+  catalog: Catalog;
   name: string;
   courses: Course[];
 }
 
 export class Course {
+  faculty: Faculty;
   id: number;
   name: string;
   academicPoints: number;
@@ -14,6 +16,7 @@ export class Course {
 }
 
 export class Group {
+  course: Course;
   id: number;
   teachers: string[];
   events: Event[];
@@ -21,6 +24,7 @@ export class Group {
 }
 
 export class Event {
+  group: Group;
   day: number;
   location: string;
   startMinute: number;
