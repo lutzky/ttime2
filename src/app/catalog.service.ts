@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class CatalogService {
   // TODO(lutzky): catalogUrl should be configurable
-  private catalogUrl = 'https://storage.googleapis.com/dev-machine-152620.appspot.com/latest.json';
+  private catalogUrl = 'https://storage.googleapis.com/repy-176217.appspot.com/latest.json';
 
   constructor(private http: Http) { }
 
