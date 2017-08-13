@@ -22,8 +22,9 @@
     <li *ngFor="let faculty of catalog.faculties">
       {{faculty.name}}
       <ul>
-        <li *ngFor="let course of faculty.courses">
-          <button (click)="addCourse(course)">+</button>
+        <li *ngFor="let course of faculty.courses"
+        [style.color]="selectedCourses.has(course) ? 'grey' : 'black'">
+          <button [disabled]="selectedCourses.has(course)" (click)="addCourse(course)">+</button>
           {{course.id}} {{course.name}}
         </li>
       </ul>
