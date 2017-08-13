@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { Catalog } from './catalog';
+import { HttpClient } from '@angular/common/http';
+import { Catalog, Faculty } from './catalog';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,12 +9,12 @@ export class CatalogService {
   // TODO(lutzky): catalogUrl should be configurable
   private catalogUrl = 'https://storage.googleapis.com/repy-176217.appspot.com/latest.json';
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   getCatalog(): Promise<Catalog> {
-    return this.http.get(this.catalogUrl)
+    return this.http.get<Faculty[]>(this.catalogUrl)
       .toPromise()
-      .then(response => (CatalogService.updateUplinks({ faculties: response.json() } as Catalog)))
+      .then(response => (CatalogService.updateUplinks({ faculties: response } as Catalog)))
       .catch(this.handleError);
   }
 

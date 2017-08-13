@@ -1,4 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { WeekdayPipe } from '../weekday.pipe';
+import { FromMinutesPipe } from '../from-minutes.pipe';
+import { SchedulerService } from '../scheduler.service';
 
 import { ScheduleViewerComponent } from './schedule-viewer.component';
 
@@ -8,7 +11,10 @@ describe('ScheduleViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScheduleViewerComponent ]
+      declarations: [ ScheduleViewerComponent, WeekdayPipe, FromMinutesPipe ],
+      providers: [
+        { provide: SchedulerService, useClass: SchedulerService }
+      ]
     })
     .compileComponents();
   }));
