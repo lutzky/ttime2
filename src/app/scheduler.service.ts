@@ -55,7 +55,7 @@ export class SchedulerService {
     })
   }
 
-  private static eventsCollide(events: catalog.Event[]): boolean {
+  static eventsCollide(events: catalog.Event[]): boolean {
     var e: catalog.Event[] = events.slice()
     SchedulerService.sortEvents(e);
 
