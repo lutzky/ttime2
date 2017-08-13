@@ -1,5 +1,7 @@
 # ttime2
 
+[![Build Status](https://travis-ci.org/lutzky/ttime2.svg?branch=master)](https://travis-ci.org/lutzky/ttime2)
+
 Javascript port of ttime, for use with github.com/lutzky/repy
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.6.
