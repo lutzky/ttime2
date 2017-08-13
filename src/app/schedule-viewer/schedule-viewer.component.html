@@ -6,7 +6,7 @@
   <button (click)="next()">&raquo;</button>
 
   <h3>Schedule {{current}}</h3>
-  <ul>
+  <ul *ngIf="schedules[current].events.length > 0; else empty_schedule">
     <li *ngFor="let dayOfEvents of byDay(schedules[current])">
       {{dayOfEvents[0].day | weekday}}
       <ul>
@@ -21,6 +21,10 @@
       </ul>
     </li>
   </ul>
+
+  <ng-template #empty_schedule>
+    <i>This is an empty schedule</i>
+  </ng-template>
 </div>
 
 <ng-template #no_schedules>
