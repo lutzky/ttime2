@@ -29,6 +29,7 @@ export class SchedulerService {
   }
 
   getSchedules(courses: catalog.Course[]): Schedule[] {
+    console.time('getSchedules');
     // Each "bin" in groupBins is a collection of groups we have to choose
     // exactly one of to get a schedule.
     var groupBins: catalog.Group[][] = courses.map(
@@ -43,6 +44,7 @@ export class SchedulerService {
     schedules = schedules.filter(this.filterNoCollisions);
     console.info(`Filetered ${numSchedules - schedules.length} of ${numSchedules} schedules`);
 
+    console.timeEnd('getSchedules');
     return schedules;
   }
 
