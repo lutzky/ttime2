@@ -29,7 +29,8 @@ export class CatalogComponent implements OnInit {
   }
 
   getSchedules() {
-    this.schedules = this.schedulerService.getSchedules(Array.from(this.selectedCourses));
+    this.schedulerService.getSchedules(Array.from(this.selectedCourses))
+      .then(schedules => this.schedules = schedules);
   }
 
   addCourse(course: Course) {

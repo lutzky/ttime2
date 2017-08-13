@@ -24,6 +24,7 @@
     "cartesian-product": "^2.1.2",
     "core-js": "^2.4.1",
     "rxjs": "^5.4.1",
+    "typed-web-workers": "^1.2.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

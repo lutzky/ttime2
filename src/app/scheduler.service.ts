@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as catalog from './catalog';
 import { Schedule } from './schedule';
+import { TypedWorker } from 'typed-web-workers';
 
 import * as product from 'cartesian-product';
 
 @Injectable()
 export class SchedulerService {
 
-  constructor() { }
+  worker: TypedWorker<catalog.Group[], Schedule[]>;
+  resolver: number;
+
+  constructor() {
+  }
+
 
   private static groupsByType(course: catalog.Course): catalog.Group[][] {
     // TODO(lutzky): Test me, move me into scheduling service
@@ -28,22 +34,28 @@ export class SchedulerService {
     return { events: e };
   }
 
-  getSchedules(courses: catalog.Course[]): Schedule[] {
-    // Each "bin" in groupBins is a collection of groups we have to choose
-    // exactly one of to get a schedule.
-    var groupBins: catalog.Group[][] = courses.map(
-      c => SchedulerService.groupsByType(c)
-    ).reduce((a, b) => a.concat(b), []);
+  getSchedules(courses: catalog.Course[]): Promise<Schedule[]> {
+    return new Promise((resolve) => {
+      var worker = new TypedWorker((courses: catalog.Course[]) => {
+        // Each "bin" in groupBins is a collection of groups we have to choose
+        // exactly one of to get a schedule.
+        var groupBins: catalog.Group[][] = courses.map(
+          c => SchedulerService.groupsByType(c)
+        ).reduce((a, b) => a.concat(b), []);
 
-    var groupProduct: catalog.Group[][] = product(groupBins);
-    var schedules: Schedule[] =  groupProduct.map(SchedulerService.groupsToSchedule);
+        var groupProduct: catalog.Group[][] = product(groupBins);
+        var schedules: Schedule[] =  groupProduct.map(SchedulerService.groupsToSchedule);
 
-    // TODO(lutzky): Generic mechanism for additional filters
-    var numSchedules = schedules.length;
-    schedules = schedules.filter(this.filterNoCollisions);
-    console.info(`Filetered ${numSchedules - schedules.length} of ${numSchedules} schedules`);
-
-    return schedules;
+        // TODO(lutzky): Generic mechanism for additional filters
+        var numSchedules = schedules.length;
+        schedules = schedules.filter(this.filterNoCollisions);
+        console.info(`Filetered ${numSchedules - schedules.length} of ${numSchedules} schedules`);
+        return schedules;
+      }, (schedules: Schedule[]) => {
+        resolve(schedules);
+      });
+      worker.postMessage(courses);
+    });
   }
 
   static sortEvents(events: catalog.Event[]) {
