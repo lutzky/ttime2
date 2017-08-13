@@ -84,4 +84,19 @@ describe('SchedulerService', () => {
     var schedule1: Schedule = {events: [event1_1]};
     expect(service.getSchedules(courses)).toEqual([schedule1]);
   }));
+
+  it('should not barf with a null-groups course', inject([SchedulerService], (service: SchedulerService) => {
+    var course1: catalog.Course = {
+      faculty: null,
+      id: 1,
+      name: "Course 1",
+      academicPoints: 0,
+      lecturerInCharge: "",
+      groups: null,
+    }
+    var courses: catalog.Course[] = [course1];
+
+    var schedule1: Schedule = {events: []};
+    expect(service.getSchedules(courses)).toEqual([schedule1]);
+  }));
 });

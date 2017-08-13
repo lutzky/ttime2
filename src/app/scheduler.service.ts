@@ -13,6 +13,10 @@ export class SchedulerService {
     // TODO(lutzky): Test me, move me into scheduling service
     var m: Map<string, catalog.Group[]> = new Map();
 
+    if (!course.groups) {
+      return [];
+    }
+
     for (let group of course.groups) {
       if (!m.has(group.type)) {
         m.set(group.type, []);
