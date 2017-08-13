@@ -13,13 +13,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 For deployment to github pages:
 
 ```
-npm install -g angular-cli-ghpages
-ng build --prod --base-href "http://lutzky.net/ttime2/"
-ngh
-```
-
-This will build a production version of the binary in `dist/`, and push it as the `gh-pages` branch of the current repository. Note that the trailing slash in `base-href` is important. For your own github pages account, you probably want to replace `lutzky.net` with `username.github.io`.
-
+npm run-script deploy
 ```
 
 ## Code scaffolding
