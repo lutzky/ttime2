@@ -49,6 +49,9 @@ export class CatalogComponent implements OnInit {
 
   unmarshalCourses() {
     var ids: number[] = JSON.parse(window.localStorage.getItem("selectedCourses"));
+    if (ids == null) {
+      return;
+    }
     for (let id of ids) {
       this.selectedCourses.add(getCourseById(this.catalog, id));
     }
